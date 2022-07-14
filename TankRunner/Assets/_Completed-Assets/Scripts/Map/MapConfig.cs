@@ -4,12 +4,11 @@ using System.Collections.Generic;
 [CreateAssetMenu]
 public class MapConfig : ScriptableObject
 {
-    public List<LevelPrototype> obstacles;
+    public List<LevelPrototype> levels;
 
     public float distancePerUnit;
+    public float xOffsetDelta;
+    public float obstacleOffset;
 
-    public float GetDistance(int u)
-    {
-        return distancePerUnit * u;
-    }
+    public List<ObstaclePrototype> obstacles;
 }

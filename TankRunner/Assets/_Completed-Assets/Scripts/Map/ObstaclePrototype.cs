@@ -1,27 +1,10 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections.Generic;
 
-[Serializable]
-public class ObstaclePrototype
+[CreateAssetMenu]
+public class ObstaclePrototype : ScriptableObject
 {
-    public Place place;
     public ObstacleType obstacle;
-    public int distanceUnit;
-}
-
-public enum Place
-{
-    RoadCenter,
-    RoadRight,
-    RoadLeft,
-    SideLeft,
-    SideRight,
-}
-
-public enum ObstacleType
-{
-    Tree = 10,
-    Coin = 20,
-    Turret = 30,
-    SideRight = 40,
+    public GameObject prefab;
+    public int value;
 }

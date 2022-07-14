@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu]
 public class LevelPrototype : ScriptableObject
 {
-    public List<ObstaclePrototype> obstacles;
+    public List<ObstacleData> obstacles;
     public string levelName;
-    public int LevelDistanceUnit;
+    public int LevelLengthUnit;
 }

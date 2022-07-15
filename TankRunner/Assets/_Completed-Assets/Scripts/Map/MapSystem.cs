@@ -11,7 +11,7 @@ public class MapSystem : MonoBehaviour
     LevelPrototype _currentLevel;
 
     int _obstacleIndex;
-    int _restDistUnit;
+    float _restDistUnit;
     ObstacleData _nextObs = null;
 
     private void Awake()
@@ -71,7 +71,7 @@ public class MapSystem : MonoBehaviour
         {
             _nextObs = _currentLevel.obstacles[_obstacleIndex];
             _obstacleIndex++;
-            _restDistUnit = _nextObs.distanceUnit;
+            _restDistUnit = _nextObs.distanceUnit*config.distancePerUnit;
         }
 
         _restDistUnit -= 1;

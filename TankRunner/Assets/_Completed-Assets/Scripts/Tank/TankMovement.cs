@@ -12,7 +12,7 @@ namespace Complete
         public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
 
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
-        private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
+        public ParticleSystem[] switchingWayParticles;
 
         Place _targetPlace;
         float _centerX;
@@ -21,20 +21,10 @@ namespace Complete
 
         private void OnEnable()
         {
-            // We grab all the Particle systems child of that Tank to be able to Stop/Play them on Deactivate/Activate
-            // It is needed because we move the Tank when spawning it, and if the Particle System is playing while we do that
-            // it "think" it move from (0,0,0) to the spawn point, creating a huge trail of smoke
-            m_particleSystems = GetComponentsInChildren<ParticleSystem>();
-            for (int i = 0; i < m_particleSystems.Length; ++i)
-                m_particleSystems[i].Play();
         }
 
         private void OnDisable()
         {
-            for (int i = 0; i < m_particleSystems.Length; ++i)
-            {
-                m_particleSystems[i].Stop();
-            }
         }
 
         private void Start()
@@ -87,7 +77,7 @@ namespace Complete
                 else if (_targetPlace == Place.Road_Left)
                     _targetPlace = Place.Road_Center;
             }
-          //  Debug.Log(_targetPlace);
+            //  Debug.Log(_targetPlace);
         }
 
         private void Move()
@@ -103,15 +93,34 @@ namespace Complete
                     xDir = 1;
                 else
                     xDir = -1;
+
+                ToggleSwitchingWayPs(true);
             }
             else
             {
                 IdleEngineAudio();
+
+                ToggleSwitchingWayPs(false);
             }
 
             //Debug.Log(xDir);
             Vector3 movement = Vector3.forward * speedZ + xDir * Vector3.right * speedX;
             transform.position += movement * Time.deltaTime;
+        }
+
+        void ToggleSwitchingWayPs(bool isPlaying)
+        {
+            foreach (var ps in switchingWayParticles)
+            {
+                if (isPlaying && !ps.isPlaying)
+                {
+                    ps.Play();
+                }
+                else if (!isPlaying && ps.isPlaying)
+                {
+                    ps.Stop();
+                }
+            }
         }
     }
 }

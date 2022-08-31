@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HouseBehaviour : MonoBehaviour
+public class HouseBehaviour : ObstacleBehaviour
 {
+    public ParticleSystem ps;
+    public Transform psPos;
 
-    // Use this for initialization
-    void Start()
+    public override void OnHitPlayer()
     {
+        var go = Instantiate(ps, psPos.position, psPos.rotation, transform.parent);
+        Destroy(go, 2.0f);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        GameSystem.instance.DamagePlayer(1);
+        Destroy(gameObject);
     }
 }

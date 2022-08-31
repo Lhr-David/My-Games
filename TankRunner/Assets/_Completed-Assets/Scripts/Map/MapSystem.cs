@@ -12,7 +12,7 @@ public class MapSystem : MonoBehaviour
 
     int _obstacleIndex;
     float _restDistUnit;
-    ObstacleData _nextObs = null;
+    ObstacleData _nextObs;
 
     private void Awake()
     {
@@ -21,14 +21,17 @@ public class MapSystem : MonoBehaviour
 
     void Start()
     {
-        StartLevel(config.levels[0]);
     }
 
-    void StartLevel(LevelPrototype level)
+    public void StartLevel(int lv)
+    {
+        StartLevel(config.levels[lv]);
+    }
+
+    public void StartLevel(LevelPrototype level)
     {
         _obstacleIndex = 0;
         _restDistUnit = 0;
-        _nextObs = null;
 
         _currentLevel = level;
     }
@@ -62,6 +65,11 @@ public class MapSystem : MonoBehaviour
         return 0;
     }
 
+    public  void TickMapProcess()
+    {
+        _restDistUnit -= 1;
+    }
+
     public void ShowObstacles(int playerZ)
     {
         if (_obstacleIndex >= _currentLevel.obstacles.Count)
@@ -70,18 +78,16 @@ public class MapSystem : MonoBehaviour
         if (_nextObs == null)
         {
             _nextObs = _currentLevel.obstacles[_obstacleIndex];
-            _obstacleIndex++;
-            _restDistUnit = _nextObs.distanceUnit*config.distancePerUnit;
+            _restDistUnit = _nextObs.distanceUnit * config.distancePerUnit;
         }
 
-        _restDistUnit -= 1;
-        if (_restDistUnit < 0)
+        if (_restDistUnit <= 0)
         {
+            _obstacleIndex++;
             var go = Instantiate(GetPrefab(_nextObs.obstacle), obsParent);
             go.transform.position = GetPosition(_nextObs.place, playerZ);
             _nextObs = null;
         }
-
         // Debug.Log("ShowObstacles " + playerZ);
     }
 

@@ -61,7 +61,8 @@ namespace Complete
             EnableTankControl();
 
             m_MessageText.text = string.Empty;
-
+            MapSystem.instance.StartLevel(0);
+            GroundSystem.instance.StartTimer();
             while (true)
             {
                 yield return null;

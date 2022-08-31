@@ -31,7 +31,6 @@ public class GroundSystem : MonoBehaviour
     private void Start()
     {
         _tickTimestamp = -1;
-        StartTimer();
     }
 
     public void StartTimer()
@@ -59,7 +58,11 @@ public class GroundSystem : MonoBehaviour
         int x = 0;
         int z = Mathf.CeilToInt(player.position.z);
 
-        MapSystem.instance.ShowObstacles(z);
+        for (int i=0;i<7;i++)
+        {
+            MapSystem.instance.ShowObstacles(z);
+        }
+        MapSystem.instance.TickMapProcess();
 
         for (int i = x - sizeDisplayWidth; i <= x + sizeDisplayWidth; i++)
         {

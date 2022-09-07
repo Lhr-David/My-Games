@@ -24,19 +24,20 @@ public class GroundSystem : MonoBehaviour
 
     private void Awake()
     {
+        _tickTimestamp = -1;
         instance = this;
         _grounds = new Dictionary<Vector2Int, GroundBehaviour>();
-    }
-
-    private void Start()
-    {
-        _tickTimestamp = -1;
     }
 
     public void StartTimer()
     {
         _tickTimestamp = Time.time;
         _gen = 0;
+    }
+
+    public void StopTimer()
+    {
+        _tickTimestamp = -1;
     }
 
     private void Update()
@@ -108,5 +109,6 @@ public class GroundSystem : MonoBehaviour
             }
         }
 
+        MapSystem.instance.CheckMapFinish(player.position.z);
     }
 }

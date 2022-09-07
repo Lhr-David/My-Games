@@ -19,10 +19,6 @@ public class MapSystem : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-    }
-
     public void StartLevel(int lv)
     {
         StartLevel(config.levels[lv]);
@@ -65,9 +61,17 @@ public class MapSystem : MonoBehaviour
         return 0;
     }
 
-    public  void TickMapProcess()
+    public void TickMapProcess()
     {
         _restDistUnit -= 1;
+    }
+
+    public void CheckMapFinish(float playerZ)
+    {
+        if (playerZ > _currentLevel.LevelLengthUnit * config.distancePerUnit)
+        {
+            GameSystem.instance.Win();
+        }
     }
 
     public void ShowObstacles(int playerZ)

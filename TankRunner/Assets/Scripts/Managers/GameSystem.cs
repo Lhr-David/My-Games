@@ -13,8 +13,15 @@ public class GameSystem : MonoBehaviour
     public int hpMax = 3;
     public int hp { get; private set; }
     public TankMovement tankMovement;
+    public TankShooting tankShooting;
+
     public CanvasGroup winCg;
     public CanvasGroup looseCg;
+
+    public GameObject coinView;
+    public GameObject hpBarView;
+    public GameObject chargeView;
+    public GameObject nextButton;
 
     private void Awake()
     {
@@ -29,6 +36,7 @@ public class GameSystem : MonoBehaviour
         hp = hpMax;
         GameHudBehaviour.instance.SyncCoin();
         GameHudBehaviour.instance.SyncHp();
+        tankShooting.shootState = TankShooting.ShootState.Normal;
     }
 
     public float GetHpRatio()
@@ -63,12 +71,16 @@ public class GameSystem : MonoBehaviour
         Debug.Log("win");
         tankMovement.forceStop = true;
         GroundSystem.instance.StopTimer();
-
-        winCg.DOFade(1, 3).OnComplete(ReloadScene);
+        tankShooting.shootState = TankShooting.ShootState.Disabled;
+        //winCg.DOFade(1, 3).OnComplete(ReloadScene);
+        nextButton.SetActive(false);
+        hpBarView.SetActive(false);
+        ChargeSystem.instance.Show();
     }
 
     public void Loose()
     {
+        tankShooting.shootState = TankShooting.ShootState.Disabled;
         Debug.Log("Loose");
         tankMovement.forceStop = true;
         GroundSystem.instance.StopTimer();
@@ -77,6 +89,11 @@ public class GameSystem : MonoBehaviour
     }
 
     public void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnClickNextLevelButton()
     {
         SceneManager.LoadScene(0);
     }

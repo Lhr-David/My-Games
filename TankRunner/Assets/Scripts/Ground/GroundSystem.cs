@@ -21,12 +21,19 @@ public class GroundSystem : MonoBehaviour
 
     float _tickTimestamp;
     int _gen;
+    bool _dontCheckWin;
 
     private void Awake()
     {
         _tickTimestamp = -1;
         instance = this;
         _grounds = new Dictionary<Vector2Int, GroundBehaviour>();
+    }
+
+    public void StartWinBulletTimer()
+    {
+        _dontCheckWin = true;
+        _tickTimestamp = Time.time;
     }
 
     public void StartTimer()
@@ -52,14 +59,21 @@ public class GroundSystem : MonoBehaviour
         }
     }
 
+    float GetGoundCurlingZ()
+    {
+        if (GameSystem.instance.tankShooting.shootState == TankShooting.ShootState.Disabled && ChargeSystem.instance.winBullet != null)
+            return ChargeSystem.instance.winBullet.position.z;
+        return player.position.z;
+    }
+
     void Curling()
     {
         //Debug.Log(_gen);
         _gen++;
         int x = 0;
-        int z = Mathf.CeilToInt(player.position.z);
+        int z = Mathf.CeilToInt(GetGoundCurlingZ());
 
-        for (int i=0;i<7;i++)
+        for (int i = 0; i < 7; i++)
         {
             MapSystem.instance.ShowObstacles(z);
         }
@@ -108,6 +122,9 @@ public class GroundSystem : MonoBehaviour
                 tile.Value.SyncPos();
             }
         }
+
+        if (_dontCheckWin)
+            return;
 
         MapSystem.instance.CheckMapFinish(player.position.z);
     }

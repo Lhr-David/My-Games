@@ -17,6 +17,8 @@ public class ChargeSystem : MonoBehaviour
     public Transform camTargetTrans2;
     public Transform camTrans1;
     public Transform camTrans2;
+    public Transform winBullet;
+
     private void Awake()
     {
         instance = this;
@@ -54,6 +56,15 @@ public class ChargeSystem : MonoBehaviour
         GameSystem.instance.tankShooting.shootState = TankShooting.ShootState.Charge;
     }
 
+    public float ShowFiredInformationAndGetFireValue()
+    {
+        text.SetActive(false);
+        bar.DOKill();
+        float fireValue = ((float)bar.sizeDelta.y) / _sizeDeltaMax.y;
+        GameSystem.instance.tankShooting.shootState = TankShooting.ShootState.Disabled;
+        return fireValue;
+    }
+
     void GoUpAnim()
     {
         bar.DOSizeDelta(_sizeDeltaMax, chargeDurationUp).SetEase(Ease.InQuad).OnComplete(GoDownAnim);
@@ -62,5 +73,14 @@ public class ChargeSystem : MonoBehaviour
     void GoDownAnim()
     {
         bar.DOSizeDelta(_sizeDeltaMin, chargeDurationDown).SetEase(Ease.OutQuad).OnComplete(GoUpAnim);
+    }
+
+    public void SetCameraFollowWinBullet(Transform bullet)
+    {
+        winBullet = bullet;
+        cam.target = bullet;
+        cam.ResetOffset(camTargetTrans2);
+        cam.enabled = true;
+        GroundSystem.instance.StartWinBulletTimer();
     }
 }

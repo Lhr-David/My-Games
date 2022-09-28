@@ -7,11 +7,11 @@ public class LevelPicker : MonoBehaviour
 
     public static void OnFail()
     {
-        currentLevelIndex += 1;
+        //currentLevelIndex += 1;
     }
 
     public static void OnWin()
     {
-        //currentLevelIndex += 1;
+        currentLevelIndex += 1;
     }
 }

@@ -73,11 +73,16 @@ public class GameSystem : MonoBehaviour
         tankMovement.forceStop = true;
         GroundSystem.instance.StopTimer();
         tankShooting.shootState = TankShooting.ShootState.Disabled;
-        //winCg.DOFade(1, 3).OnComplete(ReloadScene);
         nextButton.SetActive(false);
         hpBarView.SetActive(false);
         LevelPicker.OnWin();
         ChargeSystem.instance.Show();
+    }
+
+    public void WinTest()
+    {
+        LevelPicker.OnWin();
+        winCg.DOFade(1, 3).OnComplete(ReloadScene);
     }
 
     public void Loose()

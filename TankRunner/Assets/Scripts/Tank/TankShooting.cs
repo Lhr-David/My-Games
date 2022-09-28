@@ -19,6 +19,7 @@ public class TankShooting : MonoBehaviour
     public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
 
     public float launchForce;         // The force that will be given to the shell when the fire button is released
+    public WinBullet prefab;
 
     private void Start()
     {
@@ -42,18 +43,26 @@ public class TankShooting : MonoBehaviour
         if (shootState == ShootState.Charge)
         {
             Debug.Log("shoot win bullet");
+            var value = ChargeSystem.instance.ShowFiredInformationAndGetFireValue();
+            Debug.Log(value);
+
+            ShootWinBullet(value);
             return;
         }
 
-        // Create an instance of the shell and store a reference to it's rigidbody.
         Rigidbody shellInstance =
             Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-
-        // Set the shell's velocity to the launch force in the fire position's forward direction.
         shellInstance.velocity = launchForce * m_FireTransform.forward;
-
-        // Change the clip to the firing clip and play it.
         m_ShootingAudio.clip = m_FireClip;
         m_ShootingAudio.Play();
+    }
+
+    void ShootWinBullet(float v)
+    {
+        m_ShootingAudio.clip = m_FireClip;
+        m_ShootingAudio.Play();
+
+        var winBullet = Instantiate(prefab, m_FireTransform.position, prefab.transform.rotation);
+        winBullet.Init(v);
     }
 }

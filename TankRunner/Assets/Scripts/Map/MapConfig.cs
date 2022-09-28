@@ -16,7 +16,9 @@ public class MapConfig : ScriptableObject
 
     public List<XlsSymbolMapping> ObstacleBySymbol;
 
-    public LevelPrototype levelToOverride;
+    public LevelPrototype level1ToOverride;
+    public LevelPrototype level2ToOverride;
+    public LevelPrototype level3ToOverride;
 
     [System.Serializable]
     public struct XlsSymbolMapping

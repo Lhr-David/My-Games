@@ -13,13 +13,21 @@ public class MapConfigEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        if (GUILayout.Button("Import from xls"))
+        MapConfig t = target as MapConfig;
+        if (GUILayout.Button("Import lv1 from xls"))
         {
-            Import();
+            Import("lv1");
+            OverrideLevel(t.level1ToOverride);
         }
-        if (GUILayout.Button("Override level"))
+        if (GUILayout.Button("Import lv2 from xls"))
         {
-            OverrideLevel();
+            Import("lv2");
+            OverrideLevel(t.level2ToOverride);
+        }
+        if (GUILayout.Button("Import lv3 from xls"))
+        {
+            Import("lv3");
+            OverrideLevel(t.level3ToOverride);
         }
     }
 
@@ -33,11 +41,9 @@ public class MapConfigEditor : Editor
         obstacles.Add(item);
     }
 
-    public void OverrideLevel()
+    public void OverrideLevel(LevelPrototype level)
     {
         MapConfig t = target as MapConfig;
-        var level = t.levelToOverride;
-
         level.obstacles = new List<ObstacleData>();
         int interval = 0;
         foreach (MapElement obs in t.mapXlsCache.elements)
@@ -50,7 +56,7 @@ public class MapConfigEditor : Editor
 
             if (!string.IsNullOrEmpty(obs.Left))
             {
-                AddItem(ref interval,ref level.obstacles, ref t, Place.Road_Left, obs.Left);
+                AddItem(ref interval, ref level.obstacles, ref t, Place.Road_Left, obs.Left);
             }
             if (!string.IsNullOrEmpty(obs.LeftMid))
             {
@@ -77,9 +83,13 @@ public class MapConfigEditor : Editor
                 AddItem(ref interval, ref level.obstacles, ref t, Place.Road_Center, obs.Mid);
             }
         }
+        var n = target.name;
+        var a = level.LevelLengthUnit;
+        level.LevelLengthUnit = 1;
+        level.LevelLengthUnit = a;
     }
 
-    public void Import()
+    public void Import(string sheetName)
     {
         MapConfig t = target as MapConfig;
         SerializedObject so = new SerializedObject(t.mapXlsCache);
@@ -92,7 +102,7 @@ public class MapConfigEditor : Editor
         {
             if (property != null)
             {
-                XLSDatabase.ImportList(filePath, property);
+                XLSDatabase.ImportList(filePath, sheetName, property);
                 so.ApplyModifiedProperties();
                 Debug.Log("Import done");
             }

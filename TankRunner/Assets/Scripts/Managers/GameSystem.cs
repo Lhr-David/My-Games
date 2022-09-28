@@ -30,7 +30,8 @@ public class GameSystem : MonoBehaviour
 
     private void Start()
     {
-        MapSystem.instance.StartLevel(0);
+        Debug.Log("StartLevel" + LevelPicker.currentLevelIndex);
+        MapSystem.instance.StartLevel(LevelPicker.currentLevelIndex);
         GroundSystem.instance.StartTimer();
 
         hp = hpMax;
@@ -75,6 +76,7 @@ public class GameSystem : MonoBehaviour
         //winCg.DOFade(1, 3).OnComplete(ReloadScene);
         nextButton.SetActive(false);
         hpBarView.SetActive(false);
+        LevelPicker.OnWin();
         ChargeSystem.instance.Show();
     }
 
@@ -84,7 +86,7 @@ public class GameSystem : MonoBehaviour
         Debug.Log("Loose");
         tankMovement.forceStop = true;
         GroundSystem.instance.StopTimer();
-
+        LevelPicker.OnFail();
         looseCg.DOFade(1, 3).OnComplete(ReloadScene);
     }
 

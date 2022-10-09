@@ -6,7 +6,6 @@ public class ChargeSystem : MonoBehaviour
     public static ChargeSystem instance;
     public CanvasGroup cg;
     public GameObject text;
-    public float chargeBarHeight;
     public float chargeDurationUp;
     public float chargeDurationDown;
     public RectTransform bar;
@@ -25,7 +24,7 @@ public class ChargeSystem : MonoBehaviour
         cg.alpha = 0;
     }
 
-    private void Start()
+    public void Init(float chargeBarHeight)
     {
         var size = bar.sizeDelta;
         _sizeDeltaMin = size;

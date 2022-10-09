@@ -35,6 +35,12 @@ public class GameSystem : MonoBehaviour
         GroundSystem.instance.StartTimer();
 
         hp = hpMax;
+        StartCoroutine(StartGame());
+    }
+
+    IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(0.1f);
         GameHudBehaviour.instance.SyncCoin();
         GameHudBehaviour.instance.SyncHp();
         tankShooting.shootState = TankShooting.ShootState.Normal;

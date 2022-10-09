@@ -7,9 +7,11 @@ public class MapSystem : MonoBehaviour
     public MapConfig config;
 
     public Transform obsParent;
+    public int distanceUnitAfterLastElement;
 
     LevelPrototype _currentLevel;
 
+    float _levelEndDistance;
     int _obstacleIndex;
     float _restDistUnit;
     ObstacleData _nextObs;
@@ -28,8 +30,10 @@ public class MapSystem : MonoBehaviour
     {
         _obstacleIndex = 0;
         _restDistUnit = 0;
+        _levelEndDistance = -1;
 
         _currentLevel = level;
+        GameHudBehaviour.instance.SetLevelTitle(_currentLevel.levelName);
     }
 
     public static float GetXOffset(Place place)
@@ -68,16 +72,23 @@ public class MapSystem : MonoBehaviour
 
     public void CheckMapFinish(float playerZ)
     {
-        if (playerZ > _currentLevel.LevelLengthUnit * config.distancePerUnit)
-        {
+        if (_levelEndDistance < 0)
+            return;
+
+        if (playerZ > _levelEndDistance)
             GameSystem.instance.Win();
-        }
     }
 
     public void ShowObstacles(int playerZ)
     {
         if (_obstacleIndex >= _currentLevel.obstacles.Count)
+        {
+            if (_levelEndDistance < 0)
+            {
+                _levelEndDistance = playerZ + distanceUnitAfterLastElement * config.distancePerUnit + config.obstacleOffset;
+            }
             return;
+        }
 
         if (_nextObs == null)
         {

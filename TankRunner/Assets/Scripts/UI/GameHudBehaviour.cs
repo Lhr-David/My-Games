@@ -8,6 +8,7 @@ public class GameHudBehaviour : MonoBehaviour
     public static GameHudBehaviour instance;
 
     public Text coinText;
+    public Text levelTitleText;
 
     public CanvasGroup cgVignette;
 
@@ -23,6 +24,11 @@ public class GameHudBehaviour : MonoBehaviour
         cgVignette.alpha = 0;
         cgVignette.interactable = false;
         cgVignette.blocksRaycasts = false;
+    }
+
+    public void SetLevelTitle(string s)
+    {
+        levelTitleText.text = s;
     }
 
     public void SyncHp()

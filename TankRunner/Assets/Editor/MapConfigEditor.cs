@@ -83,10 +83,6 @@ public class MapConfigEditor : Editor
                 AddItem(ref interval, ref level.obstacles, ref t, Place.Road_Center, obs.Mid);
             }
         }
-        var n = target.name;
-        var a = level.LevelLengthUnit;
-        level.LevelLengthUnit = 1;
-        level.LevelLengthUnit = a;
     }
 
     public void Import(string sheetName)

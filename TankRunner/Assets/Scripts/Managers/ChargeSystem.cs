@@ -11,6 +11,7 @@ public class ChargeSystem : MonoBehaviour
     public RectTransform bar;
     Vector2 _sizeDeltaMin;
     Vector2 _sizeDeltaMax;
+    Vector2 _sizeDeltaFiring;
     public CameraFollowZOnlyBehaviour cam;
     public Transform camTargetTrans1;
     public Transform camTargetTrans2;
@@ -51,6 +52,7 @@ public class ChargeSystem : MonoBehaviour
     public void ShowChargeInformation()
     {
         text.SetActive(true);
+        GameHudBehaviour.instance.SetLevelTitle("");
         GoUpAnim();
         GameSystem.instance.tankShooting.shootState = TankShooting.ShootState.Charge;
     }
@@ -59,6 +61,7 @@ public class ChargeSystem : MonoBehaviour
     {
         text.SetActive(false);
         bar.DOKill();
+        _sizeDeltaFiring = bar.sizeDelta;
         float fireValue = ((float)bar.sizeDelta.y) / _sizeDeltaMax.y;
         GameSystem.instance.tankShooting.shootState = TankShooting.ShootState.Disabled;
         return fireValue;
@@ -81,5 +84,17 @@ public class ChargeSystem : MonoBehaviour
         cam.ResetOffset(camTargetTrans2);
         cam.enabled = true;
         GroundSystem.instance.StartWinBulletTimer();
+    }
+
+    public void SyncChargeBarByWinBullet(float ratio)
+    {
+        if (ratio >= 1)
+        {
+            bar.sizeDelta = new Vector2(_sizeDeltaFiring.x, 0);
+        }
+        else
+        {
+            bar.sizeDelta = new Vector2(_sizeDeltaFiring.x, _sizeDeltaFiring.y * (1 - ratio));
+        }
     }
 }

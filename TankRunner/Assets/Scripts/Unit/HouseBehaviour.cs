@@ -33,7 +33,7 @@ public class HouseBehaviour : ObstacleBehaviour
             Destroy(go, 2.0f);
             Destroy(bullet.gameObject);
             //transform.DOShakePosition(0.25f, 0.8f, 10);
-            transform.DOShakeRotation(0.25f, 10.8f, 10);
+            transform.DOShakeRotation(0.25f, 15f, 10);
         }
     }
 }

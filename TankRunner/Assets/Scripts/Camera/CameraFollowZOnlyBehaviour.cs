@@ -21,7 +21,7 @@ public class CameraFollowZOnlyBehaviour : MonoBehaviour
     public void ResetOffset(Transform relatedTrans)
     {
         transform.position = target.position + relatedTrans.localPosition;
-        transform.rotation = relatedTrans.rotation;
+        transform.rotation = relatedTrans.localRotation;
         _offset = relatedTrans.localPosition;
         resetX = false;
         resetY = true;

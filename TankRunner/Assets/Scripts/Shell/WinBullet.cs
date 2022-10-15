@@ -25,6 +25,9 @@ public class WinBullet : MonoBehaviour
 
     void Move()
     {
+        var ratio = _distancePassed / _distanceToGo;
+        ChargeSystem.instance.SyncChargeBarByWinBullet(ratio);
+
         if (_distancePassed < _distanceToGo)
         {
             StraightMove();

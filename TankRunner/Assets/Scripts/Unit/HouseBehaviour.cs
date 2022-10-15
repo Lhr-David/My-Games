@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
+using DG.Tweening;
 
 public class HouseBehaviour : ObstacleBehaviour
 {
-    public ParticleSystem ps;
+    public ParticleSystem psWound;
+    public ParticleSystem psDie;
     public Transform psPos;
+    public int hp = 1;
 
     public override void OnHitPlayer()
     {
-        var go = Instantiate(ps, psPos.position, psPos.rotation, transform.parent);
+        var go = Instantiate(psDie, psPos.position, psPos.rotation, transform.parent);
         Destroy(go, 2.0f);
 
         GameSystem.instance.DamagePlayer(1);
@@ -17,9 +19,21 @@ public class HouseBehaviour : ObstacleBehaviour
 
     public override void OnHitBullet(GameObject bullet)
     {
-        var go = Instantiate(ps, psPos.position, psPos.rotation, transform.parent);
-        Destroy(go, 2.0f);
-        Destroy(gameObject);
-        Destroy(bullet.gameObject);
+        hp -= 1;
+        if (hp <= 0)
+        {
+            var go = Instantiate(psDie, psPos.position, psPos.rotation, transform.parent);
+            Destroy(go, 2.0f);
+            Destroy(gameObject);
+            Destroy(bullet.gameObject);
+        }
+        else
+        {
+            var go = Instantiate(psWound, psPos.position, psPos.rotation, transform.parent);
+            Destroy(go, 2.0f);
+            Destroy(bullet.gameObject);
+            //transform.DOShakePosition(0.25f, 0.8f, 10);
+            transform.DOShakeRotation(0.25f, 10.8f, 10);
+        }
     }
 }

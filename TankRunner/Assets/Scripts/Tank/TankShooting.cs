@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using com;
 
 public class TankShooting : MonoBehaviour
 {
@@ -18,8 +19,10 @@ public class TankShooting : MonoBehaviour
     public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
     public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
 
-    public float launchForce;         // The force that will be given to the shell when the fire button is released
     public WinBullet prefab;
+    public float launchInterval;
+
+    float _lastFiredTimestamp;
 
     private void Start()
     {
@@ -50,11 +53,17 @@ public class TankShooting : MonoBehaviour
             return;
         }
 
+        if (GameTime.time < _lastFiredTimestamp + launchInterval)
+        {
+            return;
+        }
+
         Rigidbody shellInstance =
             Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-        shellInstance.velocity = launchForce * m_FireTransform.forward;
         m_ShootingAudio.clip = m_FireClip;
         m_ShootingAudio.Play();
+
+        _lastFiredTimestamp = GameTime.time;
     }
 
     void ShootWinBullet(float v)

@@ -16,6 +16,17 @@ public class MapSystem : MonoBehaviour
     float _restDistUnit;
     ObstacleData _nextObs;
 
+    public bool testWin;
+
+    private void Update()
+    {
+        if (testWin)
+        {
+            testWin = false;
+            GameSystem.instance.Win();
+
+        }
+    }
     private void Awake()
     {
         instance = this;

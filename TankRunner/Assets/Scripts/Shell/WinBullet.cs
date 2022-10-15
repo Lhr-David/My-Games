@@ -49,7 +49,7 @@ public class WinBullet : MonoBehaviour
         StraightMove();
         _speedY += gravity * Time.deltaTime;
         transform.position += Vector3.down * _speedY;
-        if (_speedY > 2)
+        if (transform.position.y <= 0)
         {
             GameSystem.instance.WinTest();
             this.enabled = false;

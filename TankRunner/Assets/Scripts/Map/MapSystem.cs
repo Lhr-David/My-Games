@@ -131,6 +131,6 @@ public class MapSystem : MonoBehaviour
 
     Vector3 GetPosition(Place place, int currentPlayerZ)
     {
-        return new Vector3(GetXOffset(place), -0.5f, currentPlayerZ + config.obstacleOffset);
+        return new Vector3(GetXOffset(place), 0f, currentPlayerZ + config.obstacleOffset);
     }
 }

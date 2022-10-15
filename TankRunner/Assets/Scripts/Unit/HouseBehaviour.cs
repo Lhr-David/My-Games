@@ -14,4 +14,12 @@ public class HouseBehaviour : ObstacleBehaviour
         GameSystem.instance.DamagePlayer(1);
         Destroy(gameObject);
     }
+
+    public override void OnHitBullet(GameObject bullet)
+    {
+        var go = Instantiate(ps, psPos.position, psPos.rotation, transform.parent);
+        Destroy(go, 2.0f);
+        Destroy(gameObject);
+        Destroy(bullet.gameObject);
+    }
 }

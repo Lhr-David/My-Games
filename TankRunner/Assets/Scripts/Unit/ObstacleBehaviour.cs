@@ -11,9 +11,19 @@ public class ObstacleBehaviour : MonoBehaviour
             com.SoundSystem.instance.Play(hitSound);
             OnHitPlayer();
         }
+        if (other.gameObject.tag == "Bullet")
+        {
+            com.SoundSystem.instance.Play(hitSound);
+            OnHitBullet(other.gameObject);
+        }
     }
 
     public virtual void OnHitPlayer()
+    {
+
+    }
+
+    public virtual void OnHitBullet(GameObject bullet)
     {
 
     }

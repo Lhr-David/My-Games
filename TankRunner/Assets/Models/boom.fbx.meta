@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ebda80019e49ad4449522f04c227e9ae
+guid: 76ef7e014551f6c4f94cac43fb00da35
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,43 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: paota_01 - Default
-    second: {fileID: 2100000, guid: 2c8e2650fbf9195478d9b8b65364f0be, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: paota_Material #1
-    second: {fileID: 2100000, guid: 6db0b10919bdaef4d837abe2cfc68996, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: paota_Material #3
-    second: {fileID: 2100000, guid: 6db0b10919bdaef4d837abe2cfc68996, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: paota_Material #5
+      name: Material $4
     second: {fileID: 2100000, guid: 79b8d9616c76e1b4b8cea20feed91533, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: paota_Material #6
-    second: {fileID: 2100000, guid: 9e6ce3de2d8cec346bc624b8e1ba3121, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: paota_Material #9
-    second: {fileID: 2100000, guid: f07bf86a8b8e03a43a30bcd5f1876416, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: "paota_\u5927\u70AE"
-    second: {fileID: 2100000, guid: fe40ad4d4f6eea541afe245911ce6306, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: "paota_\u70B8\u5F39"
-    second: {fileID: 2100000, guid: 3ee3a089f7610dd4eb74f206890035a3, type: 2}
+      name: "\u70B8\u5F3A"
+    second: {fileID: 2100000, guid: 79b8d9616c76e1b4b8cea20feed91533, type: 2}
   materials:
     materialImportMode: 0
     materialName: 0

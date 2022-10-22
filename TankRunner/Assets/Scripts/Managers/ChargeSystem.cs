@@ -19,6 +19,12 @@ public class ChargeSystem : MonoBehaviour
     public Transform camTrans2;
     public Transform winBullet;
 
+    public WinScorePanelBehaviour winScorePanel50;
+    public WinScorePanelBehaviour winScorePanel20;
+    public WinScorePanelBehaviour winScorePanel10;
+
+    public int multiplier;
+
     private void Awake()
     {
         instance = this;
@@ -96,5 +102,23 @@ public class ChargeSystem : MonoBehaviour
         {
             bar.sizeDelta = new Vector2(_sizeDeltaFiring.x, _sizeDeltaFiring.y * (1 - ratio));
         }
+    }
+
+    public void SetupAndShowWinPanels(float dist10, float dist20, float dist50)
+    {
+        winScorePanel50.gameObject.transform.position = new Vector3(0, 2.5f, dist50);
+        winScorePanel20.gameObject.transform.position = new Vector3(0, 2.5f, dist20);
+        winScorePanel10.gameObject.transform.position = new Vector3(0, 2.5f, dist10);
+
+        winScorePanel50.gameObject.SetActive(true);
+        winScorePanel20.gameObject.SetActive(true);
+        winScorePanel10.gameObject.SetActive(true);
+    }
+
+    public void HideWinPanels()
+    {
+        winScorePanel50.gameObject.SetActive(false);
+        winScorePanel20.gameObject.SetActive(false);
+        winScorePanel10.gameObject.SetActive(false);
     }
 }

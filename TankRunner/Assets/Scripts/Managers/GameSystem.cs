@@ -22,6 +22,7 @@ public class GameSystem : MonoBehaviour
     public GameObject hpBarView;
     public GameObject chargeView;
     public GameObject nextButton;
+    public WinPanelBehaviour winPanel;
 
     private void Awake()
     {
@@ -83,12 +84,15 @@ public class GameSystem : MonoBehaviour
         hpBarView.SetActive(false);
         LevelPicker.OnWin();
         ChargeSystem.instance.Show();
+        ChargeSystem.instance.multiplier = 1;
     }
 
     public void WinTest()
     {
         LevelPicker.OnWin();
-        winCg.DOFade(1, 3).OnComplete(ReloadScene);
+        winPanel.Reset();
+
+        winCg.DOFade(1, 3).OnComplete(()=> { winPanel.Setup(); });
     }
 
     public void Loose()

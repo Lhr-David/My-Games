@@ -16,6 +16,11 @@ public class WinBullet : MonoBehaviour
         _distancePassed = 0;
         _speedY = 0;
         ChargeSystem.instance.SetCameraFollowWinBullet(this.transform);
+
+        var dist50 = 0.9f * distanceRatio + distanceOffset + GroundSystem.instance.player.position.z;
+        var dist20 = 0.6f * distanceRatio + distanceOffset + GroundSystem.instance.player.position.z;
+        var dist10 = 0.3f * distanceRatio + distanceOffset + GroundSystem.instance.player.position.z;
+        ChargeSystem.instance.SetupAndShowWinPanels(dist10, dist20, dist50);
     }
 
     private void Update()

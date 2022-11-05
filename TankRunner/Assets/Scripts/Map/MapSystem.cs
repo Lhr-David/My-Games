@@ -111,7 +111,18 @@ public class MapSystem : MonoBehaviour
         {
             _obstacleIndex++;
             var go = Instantiate(GetPrefab(_nextObs.obstacle), obsParent);
-            go.transform.position = GetPosition(_nextObs.place, playerZ);
+            if (_nextObs.obstacle == ObstacleType.Turret)
+            {
+                go.transform.position = new Vector3(-9, -1.6f, playerZ + config.obstacleOffset);
+                var turret = go.GetComponent<TurrentBehaviour>();
+            
+                turret.Setup(_nextObs.place);
+            }
+            else
+            {
+                go.transform.position = GetPosition(_nextObs.place, playerZ);
+            }
+
             _nextObs = null;
         }
         // Debug.Log("ShowObstacles " + playerZ);

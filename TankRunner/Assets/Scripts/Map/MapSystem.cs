@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using VacuumShaders.CurvedWorld;
 
 public class MapSystem : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class MapSystem : MonoBehaviour
 
     public bool testWin;
 
+    public CurvedWorld_Controller cwc;
+
     private void Update()
     {
         if (testWin)
@@ -30,6 +33,12 @@ public class MapSystem : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        cwc._V_CW_Bend_Z = 10;
+        cwc._V_CW_Bend_X = 10;
     }
 
     public void StartLevel(int lv)
@@ -115,7 +124,7 @@ public class MapSystem : MonoBehaviour
             {
                 go.transform.position = new Vector3(-9, -1.6f, playerZ + config.obstacleOffset);
                 var turret = go.GetComponent<TurrentBehaviour>();
-            
+
                 turret.Setup(_nextObs.place);
             }
             else

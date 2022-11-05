@@ -92,7 +92,11 @@ public class GameSystem : MonoBehaviour
         LevelPicker.OnWin();
         winPanel.Reset();
 
-        winCg.DOFade(1, 3).OnComplete(()=> { winPanel.Setup(); });
+        winCg.DOFade(1, 3).OnComplete(()=> {
+            winPanel.Setup();
+            winCg.blocksRaycasts = true;
+            winCg.interactable = true;
+        });
     }
 
     public void Loose()

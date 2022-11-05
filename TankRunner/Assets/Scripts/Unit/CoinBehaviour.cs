@@ -8,6 +8,20 @@ public class CoinBehaviour : ObstacleBehaviour
     public ParticleSystem ps;
     public Transform psPos;
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            com.SoundSystem.instance.Play(hitSound);
+            OnHitPlayer();
+        }
+
+        if (other.gameObject.tag == "Bullet")
+        {
+        }
+    }
+
+
     public override void OnHitPlayer()
     {
         GameSystem.instance.AddCoin(1);

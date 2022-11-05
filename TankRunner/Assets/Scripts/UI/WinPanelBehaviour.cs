@@ -28,6 +28,7 @@ public class WinPanelBehaviour : MonoBehaviour
 
     IEnumerator SetupProcess()
     {
+
         yield return new WaitForSeconds(0.1f);
 
         rawCoinRect.gameObject.SetActive(true);

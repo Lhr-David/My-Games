@@ -26,4 +26,8 @@ public enum ObstacleType
     Coin = 20,
     Turret = 30,
     House = 40,
+
+    Pickup_magnet=101,
+    Pickup_invinsible = 102,
+    Pickup_heal = 103,
 }

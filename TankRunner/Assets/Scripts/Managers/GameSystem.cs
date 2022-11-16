@@ -91,7 +91,7 @@ public class GameSystem : MonoBehaviour
             if (hasAnim)
             {
                 shieldView.transform.localScale = Vector3.zero;
-                shieldView.transform.DOScale(1, 0.6f).SetEase(Ease.OutElastic);
+                shieldView.transform.DOScale(1, 0.6f).SetEase(Ease.OutBack);
             }
             else
             {
@@ -114,10 +114,8 @@ public class GameSystem : MonoBehaviour
     public void HealPlayer(int amount)
     {
         hp += amount;
-        if (hp < hpMax)
-        {
+        if (hp > hpMax)
             hp = hpMax;
-        }
 
         GameHudBehaviour.instance.SyncHp();
     }

@@ -12,6 +12,8 @@ public class TankMovement : MonoBehaviour
     private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
     public ParticleSystem[] switchingWayParticles;
 
+    public bool hasMagnet;
+
     Place _targetPlace;
     float _centerX;
     float _rightX;
@@ -23,6 +25,7 @@ public class TankMovement : MonoBehaviour
     {
         m_OriginalPitch = m_MovementAudio.pitch;
         _targetPlace = Place.Road_Center;
+        hasMagnet = false;
 
         _centerX = MapSystem.GetXOffset(Place.Road_Center);
         _rightX = MapSystem.GetXOffset(Place.Road_Right);

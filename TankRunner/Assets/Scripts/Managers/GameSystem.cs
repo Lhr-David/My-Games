@@ -26,6 +26,12 @@ public class GameSystem : MonoBehaviour
     public WinPanelBehaviour winPanel;
     public CanvasGroup cgStartGame;
 
+    public GameObject shieldView;
+    public bool hasShield;
+    public int shieldDestroyCount = 1;
+    int _shieldDestroyCounter;
+
+
     private void Awake()
     {
         instance = this;
@@ -69,8 +75,66 @@ public class GameSystem : MonoBehaviour
         return (float)hp / hpMax;
     }
 
+    public void ToggleShield(bool onOff, bool hasAnim)
+    {
+        //public GameObject shieldView;
+        //public bool hasShield;
+        //public int shieldDestroyCount = 1;
+        // int _shieldDestroyCounter;
+        hasShield = onOff;
+        if (onOff)
+            _shieldDestroyCounter = shieldDestroyCount;
+
+        if (onOff)
+        {
+            shieldView.SetActive(true);
+            if (hasAnim)
+            {
+                shieldView.transform.localScale = Vector3.zero;
+                shieldView.transform.DOScale(1, 0.6f).SetEase(Ease.OutElastic);
+            }
+            else
+            {
+                shieldView.transform.localScale = Vector3.one;
+            }
+        }
+        else
+        {
+            if (hasAnim)
+            {
+                shieldView.transform.DOScale(0, 0.5f).OnComplete(() => { shieldView.SetActive(false); });
+            }
+            else
+            {
+                shieldView.SetActive(false);
+            }
+        }
+    }
+
+    public void HealPlayer(int amount)
+    {
+        hp += amount;
+        if (hp < hpMax)
+        {
+            hp = hpMax;
+        }
+
+        GameHudBehaviour.instance.SyncHp();
+    }
+
     public void DamagePlayer(int damage)
     {
+        if (hasShield)
+        {
+            _shieldDestroyCounter -= 1;
+            if (_shieldDestroyCounter <= 0)
+            {
+                ToggleShield(false, true);
+            }
+            SoundSystem.instance.Play("deflect");
+            return;
+        }
+
         GameHudBehaviour.instance.BlinkVignette();
         cameraToShake.DOShakePosition(0.4f, 1, 6);
         hp -= damage;
@@ -94,6 +158,7 @@ public class GameSystem : MonoBehaviour
     public void Win()
     {
         Debug.Log("win1");
+        ToggleShield(false, true);
         tankMovement.forceStop = true;
         GroundSystem.instance.StopTimer();
         tankShooting.shootState = TankShooting.ShootState.Disabled;

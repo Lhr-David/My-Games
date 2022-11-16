@@ -45,10 +45,10 @@ public class TankShooting : MonoBehaviour
         }
         if (shootState == ShootState.Charge)
         {
-            Debug.Log("shoot win bullet");
+            //Debug.Log("shoot win bullet");
             var value = ChargeSystem.instance.ShowFiredInformationAndGetFireValue();
-            Debug.Log(value);
-
+            //Debug.Log(value);
+            SoundSystem.instance.Play("fire");
             ShootWinBullet(value);
             return;
         }
@@ -58,6 +58,7 @@ public class TankShooting : MonoBehaviour
             return;
         }
 
+        SoundSystem.instance.Play("fire");
         Rigidbody shellInstance =
             Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
         m_ShootingAudio.clip = m_FireClip;

@@ -3,6 +3,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using com;
 
 public class GameSystem : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class GameSystem : MonoBehaviour
     public GameObject chargeView;
     public GameObject nextButton;
     public WinPanelBehaviour winPanel;
+    public CanvasGroup cgStartGame;
 
     private void Awake()
     {
@@ -31,20 +33,35 @@ public class GameSystem : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("StartLevel" + LevelPicker.currentLevelIndex);
+        tankMovement.forceStop = true;
+
+        if (LevelPicker.currentLevelIndex > 0)
+            StartGame();
+    }
+
+    public void StartGame()
+    {
+        cgStartGame.DOFade(0, 0.5f);
+        cgStartGame.blocksRaycasts = false;
+        cgStartGame.interactable = false;
+        SoundSystem.instance.Play("scorePanel");
+
+        StartCoroutine(StartGameProcess());
+    }
+
+    IEnumerator StartGameProcess()
+    {
+        yield return new WaitForSeconds(0.1f);
         MapSystem.instance.StartLevel(LevelPicker.currentLevelIndex);
         GroundSystem.instance.StartTimer();
 
         hp = hpMax;
-        StartCoroutine(StartGame());
-    }
 
-    IEnumerator StartGame()
-    {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.4f);
         GameHudBehaviour.instance.SyncCoin();
         GameHudBehaviour.instance.SyncHp();
         tankShooting.shootState = TankShooting.ShootState.Normal;
+        tankMovement.forceStop = false;
     }
 
     public float GetHpRatio()
@@ -76,23 +93,24 @@ public class GameSystem : MonoBehaviour
 
     public void Win()
     {
-        Debug.Log("win");
+        Debug.Log("win1");
         tankMovement.forceStop = true;
         GroundSystem.instance.StopTimer();
         tankShooting.shootState = TankShooting.ShootState.Disabled;
         nextButton.SetActive(false);
         hpBarView.SetActive(false);
-        LevelPicker.OnWin();
         ChargeSystem.instance.Show();
         ChargeSystem.instance.multiplier = 1;
     }
 
     public void WinTest()
     {
+        Debug.Log("win2");
         LevelPicker.OnWin();
         winPanel.Reset();
 
-        winCg.DOFade(1, 3).OnComplete(()=> {
+        winCg.DOFade(1, 3).OnComplete(() =>
+        {
             winPanel.Setup();
             winCg.blocksRaycasts = true;
             winCg.interactable = true;

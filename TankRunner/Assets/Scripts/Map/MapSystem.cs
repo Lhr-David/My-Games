@@ -43,6 +43,7 @@ public class MapSystem : MonoBehaviour
 
     public void StartLevel(int lv)
     {
+        Debug.Log("StartLevel" + lv);
         StartLevel(config.levels[lv]);
     }
 

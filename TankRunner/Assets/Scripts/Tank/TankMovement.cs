@@ -23,7 +23,6 @@ public class TankMovement : MonoBehaviour
     {
         m_OriginalPitch = m_MovementAudio.pitch;
         _targetPlace = Place.Road_Center;
-        forceStop = false;
 
         _centerX = MapSystem.GetXOffset(Place.Road_Center);
         _rightX = MapSystem.GetXOffset(Place.Road_Right);

@@ -45,7 +45,7 @@ public class GameHudBehaviour : MonoBehaviour
     {
         coinText.rectTransform.DOKill();
         coinText.rectTransform.localScale = Vector3.one;
-        coinText.rectTransform.DOPunchScale(Vector3.one, 0.3f, 4, 0).OnComplete(
+        coinText.rectTransform.DOPunchScale(Vector3.one * 0.75f, 0.25f, 4, 0).OnComplete(
             () => { coinText.rectTransform.localScale = Vector3.one; });
     }
 

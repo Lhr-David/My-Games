@@ -109,6 +109,8 @@ public class TurrentBehaviour : MonoBehaviour
                 Destroy(bullet, 0.1f);
                 com.SoundSystem.instance.Play(hitSound);
                 var dist = bullet.transform.position - GameSystem.instance.tankMovement.transform.position;
+                dist.y = 0;
+                dist.z = 0;
                 if (dist.magnitude < hitRange)
                 {
                     GameSystem.instance.DamagePlayer(1);

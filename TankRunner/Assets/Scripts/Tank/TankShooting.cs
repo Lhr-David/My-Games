@@ -33,16 +33,15 @@ public class TankShooting : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.W))
         {
-            Fire();
+           // Fire();
         }
     }
 
-    private void Fire()
+    public void Fire()
     {
         if (shootState == ShootState.Disabled)
-        {
             return;
-        }
+
         if (shootState == ShootState.Charge)
         {
             //Debug.Log("shoot win bullet");

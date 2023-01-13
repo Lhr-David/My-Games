@@ -8,6 +8,7 @@ using com;
 public class GameSystem : MonoBehaviour
 {
     public static GameSystem instance;
+
     public Transform cameraToShake;
 
     public int coin = 0;
@@ -68,6 +69,23 @@ public class GameSystem : MonoBehaviour
         GameHudBehaviour.instance.SyncHp();
         tankShooting.shootState = TankShooting.ShootState.Normal;
         tankMovement.forceStop = false;
+
+        //Debug.Log("PopupShootTip " + LevelPicker.currentLevelIndex);
+        if (LevelPicker.currentLevelIndex == 2)
+        {
+            yield return new WaitForSeconds(0.4f);
+            PopupShootTip("Dodge the turret!");
+        }
+        if (LevelPicker.currentLevelIndex == 1)
+        {
+            yield return new WaitForSeconds(0.4f);
+            PopupShootTip("Shoot: Swipe up");
+        }
+        if (LevelPicker.currentLevelIndex == 0)
+        {
+            yield return new WaitForSeconds(0.4f);
+            PopupShootTip("Move left: Swipe left\nMove right: Swipe right");
+        }
     }
 
     public float GetHpRatio()
@@ -164,6 +182,11 @@ public class GameSystem : MonoBehaviour
         hpBarView.SetActive(false);
         ChargeSystem.instance.Show();
         ChargeSystem.instance.multiplier = 1;
+
+        if (LevelPicker.currentLevelIndex == 0)
+        {
+            PopupShootTip("Try swipe up when the bar is full");
+        }
     }
 
     public void WinTest()
@@ -198,5 +221,26 @@ public class GameSystem : MonoBehaviour
     public void OnClickNextLevelButton()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public GameObject shootTip;
+    public RectTransform shootTipPanel;
+    public TMPro.TextMeshProUGUI text;
+
+    public void PopupShootTip(string s)
+    {
+        text.text = s;
+        shootTip.SetActive(true);
+        shootTipPanel.DOKill();
+        shootTipPanel.localScale = Vector3.one * 0.5f;
+        shootTipPanel.DOScale(1, 0.35f).OnComplete(() => { Time.timeScale = 0; });
+        SoundSystem.instance.Play("deflect");
+    }
+
+    public void HideShootTip()
+    {
+        shootTip.SetActive(false);
+        SoundSystem.instance.Play("scorePanel");
+        Time.timeScale = 1;
     }
 }

@@ -59,23 +59,32 @@ public class TankMovement : MonoBehaviour
         }
     }
 
+    public void MoveLeft()
+    {
+        if (_targetPlace == Place.Road_Center)
+            _targetPlace = Place.Road_Left;
+        else if (_targetPlace == Place.Road_Right)
+            _targetPlace = Place.Road_Center;
+    }
+
+    public void MoveRight()
+    {
+        if (_targetPlace == Place.Road_Center)
+            _targetPlace = Place.Road_Right;
+        else if (_targetPlace == Place.Road_Left)
+            _targetPlace = Place.Road_Center;
+    }
+
     private void ReceiveInput()
     {
         if (Input.GetKeyUp(KeyCode.A))
         {
-            if (_targetPlace == Place.Road_Center)
-                _targetPlace = Place.Road_Left;
-            else if (_targetPlace == Place.Road_Right)
-                _targetPlace = Place.Road_Center;
+           // MoveLeft();
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
-            if (_targetPlace == Place.Road_Center)
-                _targetPlace = Place.Road_Right;
-            else if (_targetPlace == Place.Road_Left)
-                _targetPlace = Place.Road_Center;
+           // MoveRight();
         }
-        //  Debug.Log(_targetPlace);
     }
 
     private void Move()
